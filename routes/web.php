@@ -18,4 +18,10 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/tasks/',[TaskController::class, 'index'])->name('tasks.index');
+Route::prefix('tasks')
+    ->name('tasks.')
+    ->controller(TaskController::class)
+    ->group(function () {
+        Route::get('/tasks/', [TaskController::class, 'index'])->name('index');
+        Route::get('/tasks/{id}/edit', [TaskController::class, 'edit'])->name('edit');
+    });
