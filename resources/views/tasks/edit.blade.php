@@ -5,7 +5,9 @@
 @section('main')
     <div class="form-container">
         <h1 class="form-title">{{ $pageTitle }}</h1>
-        <form action="#" class="form">
+        <form action="{{ route('update', ['id'=>$id]) }}" method="POST" class="form">
+            @method('PUT')
+            @csrf
             <div class="form-item">
                 <label>Name:</label>
                 <input type="text" class="form-input" value="{{ $task->name }}">
