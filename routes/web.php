@@ -22,6 +22,7 @@ Route::prefix('tasks')
     ->name('tasks.')
     ->controller(TaskController::class)
     ->group(function () {
-        Route::get('/tasks/', [TaskController::class, 'index'])->name('index');
-        Route::get('/tasks/{id}/edit', [TaskController::class, 'edit'])->name('edit');
+        Route::get('/', [TaskController::class, 'index'])->name('index');
+        Route::get('create', [TaskController::class, 'create'])->name('create');
+        Route::get('{id}/edit', [TaskController::class, 'edit'])->name('edit');
     });
