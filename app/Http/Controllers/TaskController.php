@@ -31,8 +31,9 @@ class TaskController extends Controller
             [
                 'name'     => 'required',
                 'due_date' => 'required',
-                'status'   => 'required', 
-            ], $request->all()
+                'status'   => 'required',
+            ],
+            $request->all()
         );
         $task = new Task([
             'name'     => $request->name,
@@ -63,6 +64,20 @@ class TaskController extends Controller
             'status'   => $request->status,
         ]);
 
+        return redirect()->route('tasks.index');
+    }
+
+    public function delete($id)
+    {
+        $pageTitle = 'Delete Task';
+        $task = Task::findOrFail($id);
+        return view('tasks.delete', ['pageTitle' => $pageTitle, 'task' => $task]);
+    }
+
+    public function destroy($id)
+    {
+        $task = Task::find($id);
+        $task->delete();
         return redirect()->route('tasks.index');
     }
 }
