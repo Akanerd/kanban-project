@@ -22,11 +22,15 @@
         @foreach ($tasks as $index => $task)
             <div class="table-body">
                 <div class="table-body-task-name">
-                    <span
-                        class="material-icons @if ($task->status == 'completed') check-icon-completed 
-                    @else check-icon @endif">
-                        check_circle
-                    </span>
+                    @if ($task->status == 'completed')
+                        <span class="material-icons check-icon-completed">check_circle</span>
+                    @else
+                        <form action="{{ route('tasks.completed', ['id' => $task->id, 'status' => 'completed']) }}" method="post">
+                            @method('patch')
+                            @csrf
+                            <button class="button-check"><span class="material-icons check-icon">check_circle</span></button>
+                        </form>
+                    @endif
                     {{ $task->name }}
                 </div>
                 <div class="table-body-detail">{{ $task->detail }}</div>

@@ -11,7 +11,7 @@
 
         <div class="task-progress-board">
             @include('partials.task_column', [
-                'title' => 'not_started',
+                'title' => 'Not Started',
                 'tasks' => $tasks[Task::STATUS_NOT_STARTED],
                 'leftStatus' => null,
                 'rightStatus' => Task::STATUS_IN_PROGRESS,
@@ -32,7 +32,7 @@
             ])
 
             @include('partials.task_column', [
-                'title' => 'completed',
+                'title' => 'Completed',
                 'tasks' => $tasks[Task::STATUS_COMPLETED],
                 'leftStatus' => Task::STATUS_IN_REVIEW,
                 'rightStatus' => null,

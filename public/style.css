@@ -322,3 +322,11 @@ body {
   .task-progress-card-title {
     font-size: 30px;
   }
+
+  .button-check {
+    all: unset;
+  }
+  
+  .button-check:focus {
+    outline: revert;
+  }
