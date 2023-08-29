@@ -3,6 +3,9 @@
 @section('pageTitle', $pageTitle)
 
 @section('main')
+    @php
+        use App\Models\Task;
+    @endphp
     <div class="task-list-container">
         <h1 class="task-list-heading">{{ $pageTitle }}</h1>
 
