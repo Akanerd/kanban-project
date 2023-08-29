@@ -15,6 +15,11 @@ class Task extends Model
     public const STATUS_COMPLETED   = 'completed';
 
     protected $fillable = [
-        'name', 'detail', 'due_date', 'status'
+        'name', 'detail', 'due_date', 'status', 'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
