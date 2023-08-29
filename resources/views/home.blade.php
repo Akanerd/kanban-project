@@ -1,9 +1,16 @@
 @extends('layouts.master')
 
+@section('pageTitle','Home')
+
 @section('main')
     <div class="container">
         <div class="main">
             <div class="task-summary-container">
+                @if (Auth::Check())
+                    <h1 class="task-summary-greeting">
+                        Hi, {{ Auth::user()->name }}
+                    </h1>
+                @endif
                 <h1 class="task-summary-heading">Summary of Your Tasks</h1>
 
                 <div class="task-summary-list">
