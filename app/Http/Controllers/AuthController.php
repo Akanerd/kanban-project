@@ -19,8 +19,8 @@ class AuthController extends Controller
     {
         $request->validate(
             [
-                'name' => 'required',
-                'email' => ['required', 'email', 'unique:users'],
+                'name'     => 'required',
+                'email'    => ['required', 'email', 'unique:users'],
                 'password' => 'required',
             ],
             ['email.unique' => 'The email address is already taken.',],
@@ -36,8 +36,36 @@ class AuthController extends Controller
         Auth::attempt([
             'email' => $request->email,
             'password' => $request->password,
-        ]); 
+        ]);
 
         return redirect()->route('home');
+    }
+
+    public function loginForm()
+    {
+        $pageTitle = 'Login';
+        return view('auth.login_form', ['pageTitle' => $pageTitle]);
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate(
+            [
+                'email'    => ['required', 'email'],
+                'password' => 'required',
+            ],
+            $request->all()
+        );
+
+        $credentials = $request->only('email','password');
+
+        if(Auth::attempt($credentials)){
+            return redirect()->route('home');
+        }
+
+        return redirect()->back()->withInput($request->only('email'))
+        ->withErrors([
+            'email' => 'These credentialas do not match our records.'
+        ]);
     }
 }
