@@ -30,11 +30,12 @@
 
             <div class="form-item">
                 <label>Progress:</label>
+          
                 <select class="form-input" name="status">
-                    <option value="not_started">Not Started</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="in_review">Waiting / In Review</option>
-                    <option value="completed">Completed</option>
+                    <option @if ($status == 'not_started') selected @endif value="not_started">Not Started</option>
+                    <option @if ($status == 'in_progress') selected @endif value="in_progress">In Progress</option>
+                    <option @if ($status == 'in_review') selected @endif value="in_review">In Review</option>
+                    <option @if ($status == 'completed') selected @endif value="completed">Completed</option>
                 </select>
             </div>
             @error('status')
