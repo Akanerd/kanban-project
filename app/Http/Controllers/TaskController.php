@@ -80,4 +80,22 @@ class TaskController extends Controller
         $task->delete();
         return redirect()->route('tasks.index');
     }
+
+    public function progress()
+    {
+        $title = 'Task Progress';
+
+        $tasks = Task::all();
+        
+        $filteredTasks = $tasks->groupBy('status');
+
+        $tasks = [
+            'not_started' => $filteredTasks->get((Task::STATUS_NOT_STARTED), []),
+            'in_progress' => $filteredTasks->get((Task::STATUS_IN_PROGRESS), []),
+            'in_review'   => $filteredTasks->get((Task::STATUS_IN_REVIEW), []),
+            'completed'   => $filteredTasks->get((Task::STATUS_COMPLETED), []),
+        ];
+        // echo $filteredTasks;
+        return view('tasks.progress', ['pageTitle' => $title, 'tasks'=> $tasks]);
+    }
 }
