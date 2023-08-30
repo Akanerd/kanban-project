@@ -27,14 +27,14 @@
         <p>Owner: <strong>{{ $task->user->name }}</strong></p>
     </div>
     <div class="@if ($leftStatus) task-progress-card-left @else task-progress-card-right @endif">
+        @can('update', $task)
         @if ($leftStatus)
             <form action="{{ route('tasks.move', ['id' => $task->id, 'status' => $leftStatus]) }}" method="post">
                 @method('patch')
                 @csrf
                 <button class="material-icons">chevron_left</button>
             </form>
-        @endif
-
+        @endif                  
         @if ($rightStatus)
             <form action="{{ route('tasks.move', ['id' => $task->id, 'status' => $rightStatus]) }}" method="post">
                 @method('patch')
@@ -42,5 +42,6 @@
                 <button class="material-icons">chevron_right</button>
             </form>
         @endif
+        @endcan 
     </div>
 </div>

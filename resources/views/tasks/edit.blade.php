@@ -32,10 +32,10 @@
             <div class="form-item">
                 <label>Progress:</label>
                 <select class="form-input" name="status">
-                    <option @if ($task->status == 'not_started')  @endif value="not_started">Not Started</option>
-                    <option @if ($task->status == 'in_progress')  @endif value="in_progress">In Progress</option>
-                    <option @if ($task->status == 'in_review')  @endif value="in_review">Waiting / In Review</option>
-                    <option @if ($task->status == 'completed')  @endif value="completed">Completed</option>
+                    <option @if ($task->status == 'not_started') selected @endif value="not_started">Not Started</option>
+                    <option @if ($task->status == 'in_progress') selected @endif value="in_progress">In Progress</option>
+                    <option @if ($task->status == 'in_review') selected @endif value="in_review">Waiting / In Review</option>
+                    <option @if ($task->status == 'completed') selected @endif value="completed">Completed</option>
                 </select>
             </div>
             <button type="submit" class="form-button">Submit</button>

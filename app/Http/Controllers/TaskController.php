@@ -12,6 +12,7 @@ class TaskController extends Controller
 
     public function __construct()
     {
+        // $this->authorizeResource(Task::class);
     }
 
     public function index()
@@ -52,18 +53,19 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function edit($id)
+    public function edit($id, Task $task)
     {
         $pageTitle = 'Edit List';
-        $task = Task::findOrFail($id);
         Gate::authorize('update', $task);
+        // $this->authorize('update', $task);
+        $task = Task::findOrFail($id);
         return view('tasks.edit', ['pageTitle' => $pageTitle, 'task' => $task]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id,Task $task)
     {
-        $task = Task::find($id);
         Gate::authorize('update', $task);
+        $task = Task::find($id);
         $task->update([
             'name'     => $request->name,
             'detail'   => $request->detail,
@@ -74,18 +76,18 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function delete($id)
+    public function delete($id, Task $task)
     {
         $pageTitle = 'Delete Task';
-        $task = Task::findOrFail($id);
         Gate::authorize('delete', $task);
+        $task = Task::findOrFail($id);
         return view('tasks.delete', ['pageTitle' => $pageTitle, 'task' => $task]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Task $task)
     {
-        $task = Task::find($id);
         Gate::authorize('delete', $task);
+        $task = Task::find($id);
         $task->delete();
         return redirect()->route('tasks.index');
     }
@@ -95,7 +97,7 @@ class TaskController extends Controller
         $title = 'Task Progress';
 
         $tasks = Task::all();
-        
+
         $filteredTasks = $tasks->groupBy('status');
 
         $tasks = [
@@ -105,26 +107,28 @@ class TaskController extends Controller
             'completed'   => $filteredTasks->get((Task::STATUS_COMPLETED), []),
         ];
         // echo $filteredTasks;
-        return view('tasks.progress', ['pageTitle' => $title, 'tasks'=> $tasks]);
+        return view('tasks.progress', ['pageTitle' => $title, 'tasks' => $tasks]);
     }
 
-    public function move(int $id, Request $request)
+    public function move(int $id, Request $request, Task $task)
     {
+        Gate::authorize('update', $task);
         $task = Task::findOrFail($id);
 
         $task->update([
-            'status'=> $request->status,
+            'status' => $request->status,
         ]);
 
         return redirect()->route('tasks.progress');
     }
 
-    public function completed(int $id, Request $request)
+    public function completed(int $id, Request $request, Task $task)
     {
+        Gate::authorize('update', $task);
         $task = Task::findOrFail($id);
 
         $task->update([
-            'status'=> $request->status,
+            'status' => $request->status,
         ]);
 
         return redirect()->route('tasks.index');
@@ -141,6 +145,5 @@ class TaskController extends Controller
             'completed_count'   => $completed_count,
             'uncompleted_count' => $uncompleted_count,
         ]);
-
     }
 }

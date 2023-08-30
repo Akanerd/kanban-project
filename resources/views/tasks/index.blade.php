@@ -25,10 +25,12 @@
                     @if ($task->status == 'completed')
                         <span class="material-icons check-icon-completed">check_circle</span>
                     @else
-                        <form action="{{ route('tasks.completed', ['id' => $task->id, 'status' => 'completed']) }}" method="post">
+                        <form action="{{ route('tasks.completed', ['id' => $task->id, 'status' => 'completed']) }}"
+                            method="post">
                             @method('patch')
                             @csrf
-                            <button class="button-check"><span class="material-icons check-icon">check_circle</span></button>
+                            <button class="button-check"><span
+                                    class="material-icons check-icon">check_circle</span></button>
                         </form>
                     @endif
                     {{ $task->name }}
@@ -55,8 +57,14 @@
                 </div>
                 <div class="table-body-owner-name">{{ $task->user->name }}</div>
                 <div>
-                    <a href="{{ route('tasks.edit', ['id' => $task->id]) }}">Edit</a>
-                    <a href="{{ route('tasks.delete', ['id' => $task->id]) }}">Delete</a>
+                    <div class="table-body-links">
+                        @can('update', $task)
+                            <a href="{{ route('tasks.edit', ['id' => $task->id]) }}">Edit</a>
+                        @endcan
+                        @can('delete', $task)
+                            <a href="{{ route('tasks.delete', ['id' => $task->id]) }}">Delete</a>
+                        @endcan
+                    </div>
                 </div>
             </div>
         @endforeach
